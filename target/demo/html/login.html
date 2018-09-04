@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../JS/jquery-3.2.1.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#login").click(function () {
+			var username = $('input:text').val();
+			var password = $('input:password').val();
+			
+			$.post("http://localhost:8080/demo/user/login",{username:username,password:password},function (resp) {
+	           console.log(resp)
+	           var json = $.parseJSON(resp)
+	           console.log(json)
+				if(json){
+					alert('登录成功')
+					sessionStorage.setItem("username",username);
+					window.location.href="item.html";
+				}else{
+					alert('登录失败')
+				}
+	        },"json")
+		})
+		$("#register").click(function () {
+			window.location.href="register.html";
+		})
+	})
+</script>
+</head>
+<body>
+<table>
+		<tr>
+			<td>用户名</td>
+			<td><input type="text" name="username"  value=""></td>
+		</tr>
+		<tr>
+			<td>密码</td>
+			<td><input type="password" name="password"  value=""></td>
+		</tr>
+		<tr>
+			<td><button id="login">登录</button></td>
+			<td><button id="register">注册</button></td>
+		</tr>
+</table>
+</body>
+</html>

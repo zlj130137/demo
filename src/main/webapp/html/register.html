@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../JS/jquery-3.2.1.js"></script>
+    <style>
+        ul{
+            list-style: none;
+        }
+    </style>
+    <script>
+        $(function () {
+            checkPassQiang();
+            function checkPassQiang() {
+                $("#repassword").keyup(function () {
+                    var password = $("#password").val();
+                    var repassword = $("#repassword").val();
+                    console.log(password+","+repassword);
+                    if(password==repassword){
+                        this.nextElementSibling.innerText= "两次输入密码一致";
+                        this.nextElementSibling.style.color = "green"
+                    }
+                    if(password!=repassword){
+                        this.nextElementSibling.innerText = "两次输入密码不一致";
+                        this.nextElementSibling.style.color = "red"
+                    }
+                })
+            }
+            $("#ret").click(function () {
+                window.location.href = "login.html";
+            })
+            $("#btn").click(function () {
+                var username = $("#username").val();
+                var password = $("#password").val();
+                var repassword = $("#repassword").val();
+                if(password==repassword){
+                    $.post('http://localhost:8080/demo/user/register',{username:username,password:password,repassword:repassword},function (resp) {
+                    	console.log(resp)
+         	           var json = $.parseJSON(resp)
+         	           console.log(json)
+         				if(json){
+         					alert('注册成功')
+         					window.location.href="login.html";
+         				}else{
+         					alert('注册失败')
+         				}
+                    })
+                        
+                }
+                else{
+                    alert("两次密码输入不一致");
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+<ul>
+        <li>&nbsp;&nbsp;用户名:<input type="text" name="username" id="username"></li>
+        <li>&nbsp;&nbsp;密&nbsp;&nbsp;&nbsp;码:<input type="password" name="password" id="password"></li>
+        <li>重复密码:<input type="password" name="repassword" id="repassword"><span></span></li>
+        <li><button id="btn">注册</button><button id="ret">返回</button></li>
+
+</ul>
+</body>
+</html>

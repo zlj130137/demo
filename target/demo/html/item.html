@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../JS/jquery-3.2.1.js"></script>
+<style type="text/css">
+#dv ul {
+	list-style: none;
+}
+</style>
+ <script type="text/javascript">
+          $(function() {
+              var a = "";
+              var json =[];
+              $('#box p span').html(sessionStorage.getItem("username"));
+              console.log(sessionStorage.getItem("username"))
+              $.ajax({
+                  url: "http://localhost:8080/demo/projectPo/list",
+                  type: "get",                
+                  dataType:"json",
+                  contentType: "/applicationx-www-form-urlencoded; charset=utf-8",
+                  success: function (resp) {
+                	  var str = "<ul>"
+                	  $.each(resp,function(i,m){
+                		  str+="<li>"+"题目编号："+m.id+"</li>";
+                		  str+="<li>"+"题目名称："+m.content+"</li>";                		            
+                          if(m.btype=="0")
+                          {
+                              $.each(m.bcheck,function(j,n){
+                                  str+="<li><input type=\"radio\" name=\"'+n.id+'\">"+"："+n.bvalue+"</li>";
+                              });
+                          }
+                          else
+                          {
+                              $.each(m.choiceText,function(j,n){
+                                  str+="<li><textarea name=\"'+n.id+'\"></textarea></li>";
+                              });
+                          }
+
+                	  })
+                	  str+="</ul>";
+                	  $("#dv").append(str);
+                       console.log(resp);                   
+                  }
+              });
+              $("#out").click(function () {
+                  sessionStorage.removeItem("username");
+                  window.location.href="login.html";
+              })
+          })
+    </script>
+</head>
+<body>
+	<div id="box">
+		<p>用户：<span></span></p>
+        <button id="out">退出</button>
+        <div id="dv"></div>
+        <button id="btn">提交</button>
+    </div>
+</body>
+</html>

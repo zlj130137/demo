@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.survey.dao.SurveymapMapper" >
+  <resultMap id="BaseResultMap" type="com.survey.entity.Surveymap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="bkey" property="bkey" jdbcType="VARCHAR" />
+    <result column="bvalue" property="bvalue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, bkey, bvalue
+  </sql>
+  <select id="selectByPrimaryId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from surveymap
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    *
+    from surveymap
+    where bkey = #{_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from surveymap
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.survey.entity.Surveymap" >
+    insert into surveymap (id, bkey, bvalue
+      )
+    values (#{id,jdbcType=INTEGER}, #{bkey,jdbcType=VARCHAR}, #{bvalue,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.survey.entity.Surveymap" >
+    insert into surveymap
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bkey != null" >
+        bkey,
+      </if>
+      <if test="bvalue != null" >
+        bvalue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bkey != null" >
+        #{bkey,jdbcType=VARCHAR},
+      </if>
+      <if test="bvalue != null" >
+        #{bvalue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.survey.entity.Surveymap" >
+    update surveymap
+    <set >
+      <if test="bkey != null" >
+        bkey = #{bkey,jdbcType=VARCHAR},
+      </if>
+      <if test="bvalue != null" >
+        bvalue = #{bvalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.survey.entity.Surveymap" >
+    update surveymap
+    set bkey = #{bkey,jdbcType=VARCHAR},
+      bvalue = #{bvalue,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
